@@ -1,35 +1,37 @@
-# 🍽️ CookWise - Akıllı Yemek Öneri Sistemi
+# 🍽️ CookWise - Smart Meal Recommendation System
 
-CookWise, **elinizdeki malzemelere** göre **akıllı yemek önerileri** sunan bir Python uygulamasıdır. Kullanıcılar, sahip oldukları malzemeleri girdiklerinde, uygulama bu malzemelere en uygun yemekleri önerir. Ayrıca, tariflerin detaylarına kolayca ulaşabilirler. 🍳🥘
-
----
-
-## 🚀 Özellikler
-
-- **Malzeme Tabanlı Yemek Önerisi**: Kullanıcı, elindeki malzemeleri girdikten sonra, sistem mevcut malzemelere göre yemek önerileri sunar. 🥒🍅
-- **Tarif Detayları**: Kullanıcı, önerilen yemeklerin tariflerine ulaşabilir. 📖🍴
-- **Eksik Malzemeler**: Eğer önerilen yemeklerde eksik malzemeler varsa, sistem eksik malzemeleri de gösterir. ❌🍞
-- **Basit ve Kullanıcı Dostu Arayüz**: PyQt6 kullanılarak oluşturulmuş modern ve kullanıcı dostu bir arayüz sunulmaktadır. 💻🎨
+**CookWise** is a Python application that provides **smart meal suggestions** based on the **ingredients you already have**. When users enter their available ingredients, the app recommends the most suitable meals and offers easy access to recipe details. 🍳🥘
 
 ---
 
-## 🛠️ Kullanım
+## 🚀 Features
 
-### Gereksinimler
+* **Ingredient-Based Meal Suggestions**: Users input the ingredients they have, and the system suggests meals based on those ingredients. 🥒🍅
+* **Recipe Details**: Users can view detailed recipes for the suggested meals. 📖🍴
+* **Missing Ingredients**: If there are any missing ingredients in the suggested recipes, the system highlights them. ❌🍞
+* **Simple and User-Friendly Interface**: A modern and user-friendly interface built with PyQt6. 💻🎨
 
-- **Python 3.8+** 🐍
-- **PyQt6** (GUI için) 🎨
-- **JSON verisi** ile yemek tarifleri ve malzeme listeleri 🍲📜
+---
 
-### Kurulum
+## 🛠️ Usage
 
-1. **Projeyi bilgisayarınıza indirin**:
+### Requirements
+
+* **Python 3.8+** 🐍
+* **PyQt6** (for the GUI) 🎨
+* Meal recipes and ingredient lists in **JSON format** 🍲📜
+
+### Installation
+
+1. **Clone the project to your local machine**:
+
    ```bash
-   git clone https://github.com/kullaniciadi/CookWise.git
+   git clone https://github.com/username/CookWise.git
    cd CookWise
    ```
 
-2. **Sanal ortam oluşturun ve gerekli bağımlılıkları yükleyin**:
+2. **Create a virtual environment and install dependencies**:
+
    ```bash
    python -m venv .venv
    .\.venv\Scripts\activate  # Windows
@@ -37,9 +39,9 @@ CookWise, **elinizdeki malzemelere** göre **akıllı yemek önerileri** sunan b
    pip install -r requirements.txt
    ```
 
-3. **Veritabanı dosyalarını** (`recipes.json` ve `preparations.json`) **`data/` klasörüne yerleştirin**.
+3. **Place the database files** (`recipes.json` and `preparations.json`) **inside the `data/` folder**.
 
-4. **Uygulamayı çalıştırın**:
+4. **Run the application**:
 
    ```bash
    python main.py
@@ -47,54 +49,54 @@ CookWise, **elinizdeki malzemelere** göre **akıllı yemek önerileri** sunan b
 
 ---
 
-## 📁 Dosya Yapısı
+## 📁 Project Structure
 
-Projenin dosya yapısı aşağıdaki gibi düzenlenmiştir:
+Here’s how the project is organized:
 
 ```
 CookWise/
 │
-├── main.py                # Ana uygulama dosyası 🖥️
+├── main.py                # Main application file 🖥️
 ├── data/
-│   ├── recipes.json       # Yemek malzemelerini içeren JSON dosyası 🥗
-│   └── preparations.json  # Yemek tariflerini içeren JSON dosyası 🍽️
+│   ├── recipes.json       # JSON file containing ingredients for meals 🥗
+│   └── preparations.json  # JSON file containing cooking instructions 🍽️
 ├── icons/
-│   ├── chef.png           # Şef ikonu 🍳
-│   └── book.png           # Tarife kitap ikonu 📚
+│   ├── chef.png           # Chef icon 🍳
+│   └── book.png           # Recipe book icon 📚
 ├── ui/
-│   ├── icons.py           # İkonları yüklemek için fonksiyonlar 📦
-│   └── styles.py          # Uygulama stil (QSS) temalarını içeren dosya 🎨
-└── requirements.txt       # Gerekli Python paketlerinin listesi 📑
+│   ├── icons.py           # Functions for loading icons 📦
+│   └── styles.py          # QSS themes for styling the UI 🎨
+└── requirements.txt       # List of required Python packages 📑
 ```
 
 ---
 
-## 💻 Geliştirme
+## 💻 Development
 
-Proje üzerinde geliştirme yapmak için aşağıdaki adımları takip edebilirsiniz:
+To contribute or expand the project, consider the following:
 
-1. **Yeni özellikler ekleyin**: Örneğin, kullanıcı tercihlerine göre yemek önerileri veya diyet seçenekleri eklenebilir. 🥗🍔
-2. **UI İyileştirmeleri**: Kullanıcı arayüzünü daha da profesyonelleştirebilirsiniz. Daha fazla tema veya animasyonlar eklemek mümkündür. 🌟
-3. **Veri Güncellemeleri**: Yeni yemek tarifleri ve malzemeler eklemek için `recipes.json` ve `preparations.json` dosyalarını güncelleyebilirsiniz. 📈
-
----
-
-## 🛠️ Teknolojiler
-
-* **Python**: Uygulama Python 3 ile geliştirilmiştir. 🐍
-* **PyQt6**: Kullanıcı arayüzü için PyQt6 kütüphanesi kullanılmaktadır. 🎨
-* **JSON**: Yemek verisi ve tarifler JSON formatında saklanmaktadır. 📑
+1. **Add New Features**: For example, suggestions based on user preferences or diet options. 🥗🍔
+2. **Improve the UI**: Make the user interface more polished with additional themes or animations. 🌟
+3. **Update Data**: Add more recipes and ingredients by updating the `recipes.json` and `preparations.json` files. 📈
 
 ---
 
-## 🤝 Katkı
+## 🛠️ Technologies
 
-Eğer projeye katkıda bulunmak isterseniz, **pull request** gönderebilir veya **sorunları (issues)** bildirebilirsiniz. Yeni özellik önerileri veya hata düzeltmeleri her zaman kabul edilir! 🔧
-
-**CookWise** projesi, yemek yapmayı kolaylaştırmak ve kullanıcıların ellerindeki malzemelerle hızlıca yemek bulmalarını sağlamak amacıyla geliştirilmiştir. Yardımcı olabileceğimiz herhangi bir konuda çekinmeden bizimle iletişime geçebilirsiniz. 😊
+* **Python**: Developed using Python 3. 🐍
+* **PyQt6**: GUI created using the PyQt6 framework. 🎨
+* **JSON**: Recipe and ingredient data is stored in JSON format. 📑
 
 ---
 
-## 📜 **License**
+## 🤝 Contributing
+
+If you’d like to contribute, feel free to **submit a pull request** or **report issues**. New feature ideas and bug fixes are always welcome! 🔧
+
+The **CookWise** project was built to make cooking easier and help users quickly find recipes using the ingredients they already have. Feel free to reach out if you have any questions or need assistance. 😊
+
+---
+
+## 📜 License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
