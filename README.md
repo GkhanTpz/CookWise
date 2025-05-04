@@ -1,4 +1,3 @@
-````markdown
 # 🍽️ CookWise - Akıllı Yemek Öneri Sistemi
 
 CookWise, **elinizdeki malzemelere** göre **akıllı yemek önerileri** sunan bir Python uygulamasıdır. Kullanıcılar, sahip oldukları malzemeleri girdiklerinde, uygulama bu malzemelere en uygun yemekleri önerir. Ayrıca, tariflerin detaylarına kolayca ulaşabilirler. 🍳🥘
@@ -28,10 +27,9 @@ CookWise, **elinizdeki malzemelere** göre **akıllı yemek önerileri** sunan b
    ```bash
    git clone https://github.com/kullaniciadi/CookWise.git
    cd CookWise
-````
+   ```
 
 2. **Sanal ortam oluşturun ve gerekli bağımlılıkları yükleyin**:
-
    ```bash
    python -m venv .venv
    .\.venv\Scripts\activate  # Windows
@@ -93,14 +91,10 @@ Proje üzerinde geliştirme yapmak için aşağıdaki adımları takip edebilirs
 
 Eğer projeye katkıda bulunmak isterseniz, **pull request** gönderebilir veya **sorunları (issues)** bildirebilirsiniz. Yeni özellik önerileri veya hata düzeltmeleri her zaman kabul edilir! 🔧
 
+**CookWise** projesi, yemek yapmayı kolaylaştırmak ve kullanıcıların ellerindeki malzemelerle hızlıca yemek bulmalarını sağlamak amacıyla geliştirilmiştir. Yardımcı olabileceğimiz herhangi bir konuda çekinmeden bizimle iletişime geçebilirsiniz. 😊
+
 ---
 
 ## 📜 Lisans
 
 Bu proje **MIT Lisansı** ile lisanslanmıştır. Daha fazla bilgi için `LICENSE` dosyasına bakabilirsiniz. 📄
-
----
-
-**CookWise** projesi, yemek yapmayı kolaylaştırmak ve kullanıcıların ellerindeki malzemelerle hızlıca yemek bulmalarını sağlamak amacıyla geliştirilmiştir. Yardımcı olabileceğimiz herhangi bir konuda çekinmeden bizimle iletişime geçebilirsiniz. 😊
-
-```
