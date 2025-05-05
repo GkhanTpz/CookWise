@@ -1,41 +1,20 @@
-import json
-import random
 import sys
-from PyQt6.QtWidgets import QApplication, QWidget, QLabel, QLineEdit, QVBoxLayout, QPushButton, QRadioButton, QGroupBox, QMessageBox, QScrollArea
+import random
+from PyQt6.QtWidgets import (
+    QApplication, QWidget, QLabel, QLineEdit, QVBoxLayout, QPushButton,
+    QRadioButton, QGroupBox, QMessageBox, QScrollArea
+)
 from PyQt6.QtCore import QSize
+
 from ui.styles import get_theme
 from ui.icons import get_icon
-from add_recipe import RecipeAdder  # 🍽️ Yeni yemek ekleme penceresini import ettik
+from add_recipe import RecipeAdder
+
+# helpers.py'den gerekli fonksiyonları import ediyoruz
+from utils.helpers import load_data, get_user_ingredients, score_recipe_match, format_recipe
 
 # Verileri yükle
-def load_data():
-    with open("data/recipes.json", "r", encoding="utf-8") as f:
-        recipes = json.load(f)
-
-    with open("data/preparations.json", "r", encoding="utf-8") as f:
-        preparations = json.load(f)
-
-    return recipes, preparations
-
 recipes, preparations = load_data()
-
-def get_user_ingredients(input_str):
-    return [item.strip().lower() for item in input_str.split(",") if item.strip()]
-
-def score_recipe_match(user_ingredients):
-    scored = []
-    for dish, data in recipes.items():
-        ingredients_lower = [i.lower() for i in data["ingredients"]]
-        matched = [u for u in user_ingredients if any(u in ing for ing in ingredients_lower)]
-        score = len(matched)
-        missing = [ing for ing in ingredients_lower if not any(u in ing for u in user_ingredients)]
-        scored.append((dish, score, missing, matched, ingredients_lower))
-    scored.sort(key=lambda x: x[1], reverse=True)
-    return scored
-
-def format_recipe(preparation):
-    steps = preparation.split("\n")
-    return "\n".join([f"{idx+1}. {step.strip()}" for idx, step in enumerate(steps)])
 
 class CookWiseApp(QWidget):
     def __init__(self):
@@ -58,12 +37,11 @@ class CookWiseApp(QWidget):
         self.input_entry.setStyleSheet("font-size: 16px; padding: 10px;")
         layout.addWidget(self.input_entry)
 
-        # Yemek öneri alanı
+        # Öneri kutusu (scrollable)
         self.results_groupbox = QGroupBox("Önerilen Yemekler")
         self.results_layout = QVBoxLayout()
         self.results_groupbox.setLayout(self.results_layout)
 
-        # Scrollable area for results
         scroll_area = QScrollArea(self)
         scroll_area.setWidgetResizable(True)
         scroll_area.setWidget(self.results_groupbox)
@@ -72,16 +50,16 @@ class CookWiseApp(QWidget):
         # Yemek öner butonu
         suggest_button = QPushButton("🍽️ Yemek Öner!", self)
         suggest_button.setIcon(get_icon("chef"))
-        suggest_button.setIconSize(QSize(30, 30))  # İkon boyutunu ayarlama
-        suggest_button.setStyleSheet(get_theme("light"))  # Tema stilleri burada uygulanıyor
+        suggest_button.setIconSize(QSize(30, 30))
+        suggest_button.setStyleSheet(get_theme("light"))
         suggest_button.clicked.connect(self.on_submit)
         layout.addWidget(suggest_button)
 
         # Tarifi Göster Butonu
         self.show_recipe_button = QPushButton("📖 Tarifi Göster", self)
         self.show_recipe_button.setIcon(get_icon("book"))
-        self.show_recipe_button.setIconSize(QSize(30, 30))  # İkon boyutunu ayarlama
-        self.show_recipe_button.setStyleSheet(get_theme("light"))  # Tema stilleri burada uygulanıyor
+        self.show_recipe_button.setIconSize(QSize(30, 30))
+        self.show_recipe_button.setStyleSheet(get_theme("light"))
         self.show_recipe_button.setVisible(False)
         self.show_recipe_button.clicked.connect(self.show_selected_recipe)
         layout.addWidget(self.show_recipe_button)
@@ -113,7 +91,7 @@ class CookWiseApp(QWidget):
             return
 
         user_ingredients = get_user_ingredients(user_input)
-        matches = score_recipe_match(user_ingredients)
+        matches = score_recipe_match(user_ingredients, recipes)
 
         if not matches or matches[0][1] == 0:
             QMessageBox.information(self, "Yemek bulunamadı", "Uygun bir yemek bulunamadı. Rastgele bir yemek öneriliyor.")
@@ -128,7 +106,7 @@ class CookWiseApp(QWidget):
                 display += f" | Eksik: {', '.join(missing)}"
             radio_button = QRadioButton(display, self)
             radio_button.setStyleSheet("font-size: 16px; padding: 5px;")
-            radio_button.setProperty("dish", dish)  # doğru yemeği takip et
+            radio_button.setProperty("dish", dish)
             self.results_layout.addWidget(radio_button)
 
         self.show_recipe_button.setVisible(True)
@@ -158,17 +136,17 @@ class CookWiseApp(QWidget):
             QMessageBox.warning(self, "Yemek Seçin", "Lütfen bir yemek seçin.")
 
     def open_add_recipe_window(self):
-        self.recipe_adder = RecipeAdder(on_recipe_added=self.update_recipes)  # Yeni eklenen yemek ekleme sonrası güncelleme işlemi
+        self.recipe_adder = RecipeAdder(on_recipe_added=self.update_recipes)
         self.recipe_adder.show()
 
     def update_recipes(self):
-        global recipes, preparations  # Global verileri güncelliyoruz
-        recipes, preparations = load_data()  # Verileri tekrar yükleyip güncelliyoruz
+        global recipes, preparations
+        recipes, preparations = load_data()
         QMessageBox.information(self, "Başarı", "Yeni yemek başarıyla eklendi ve veri güncellendi!")
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = CookWiseApp()
-    window.setStyleSheet(get_theme("light"))  # Burada tema belirleniyor
+    window.setStyleSheet(get_theme("light"))
     window.show()
     sys.exit(app.exec())

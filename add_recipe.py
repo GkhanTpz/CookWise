@@ -1,18 +1,21 @@
 import sys
 import os
 import json
-from PyQt6.QtWidgets import (QApplication, QWidget, QLabel, QLineEdit,
-                             QTextEdit, QPushButton, QVBoxLayout, QMessageBox)
+from PyQt6.QtWidgets import (
+    QApplication, QWidget, QLabel, QLineEdit,
+    QTextEdit, QPushButton, QVBoxLayout, QMessageBox
+)
 from ui.styles import get_theme
 
 RECIPES_PATH = os.path.join("data", "recipes.json")
 PREPARATIONS_PATH = os.path.join("data", "preparations.json")
 
 class RecipeAdder(QWidget):
-    def __init__(self):
+    def __init__(self, on_recipe_added=None):  # ✅ callback parametresi eklendi
         super().__init__()
         self.setWindowTitle("Add New Recipe - CookWise")
         self.setGeometry(200, 200, 500, 400)
+        self.on_recipe_added = on_recipe_added  # ✅ callback fonksiyonu sakla
         self.init_ui()
 
     def init_ui(self):
@@ -59,7 +62,6 @@ class RecipeAdder(QWidget):
             with open(PREPARATIONS_PATH, "r", encoding="utf-8") as f:
                 preparations = json.load(f)
 
-        # Güncelleme / ekleme
         recipes[name] = {"ingredients": ingredients}
         if preparation:
             preparations[name] = preparation
@@ -75,8 +77,6 @@ class RecipeAdder(QWidget):
         self.ingredients_input.clear()
         self.prep_input.clear()
 
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    window = RecipeAdder()
-    window.show()
-    sys.exit(app.exec())
+        if self.on_recipe_added:  # ✅ callback varsa çalıştır
+            self.on_recipe_added()
+
