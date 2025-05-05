@@ -57,6 +57,7 @@ Here’s how the project is organized:
 CookWise/
 │
 ├── main.py                # Main application file 🖥️
+├── add_recipe.py          # Handles adding new recipes to CookWise. 🍲
 ├── data/
 │   ├── recipes.json       # JSON file containing ingredients for meals 🥗
 │   └── preparations.json  # JSON file containing cooking instructions 🍽️
@@ -67,6 +68,7 @@ CookWise/
 │   ├── icons.py           # Functions for loading icons 📦
 │   └── styles.py          # QSS themes for styling the UI 🎨
 └── requirements.txt       # List of required Python packages 📑
+
 ```
 
 ---
