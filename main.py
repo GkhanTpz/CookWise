@@ -5,13 +5,19 @@ from PyQt6.QtWidgets import QApplication, QWidget, QLabel, QLineEdit, QVBoxLayou
 from PyQt6.QtCore import QSize
 from ui.styles import get_theme
 from ui.icons import get_icon
+from add_recipe import RecipeAdder  # 🍽️ Yeni yemek ekleme penceresini import ettik
 
 # Verileri yükle
-with open("data/recipes.json", "r", encoding="utf-8") as f:
-    recipes = json.load(f)
+def load_data():
+    with open("data/recipes.json", "r", encoding="utf-8") as f:
+        recipes = json.load(f)
 
-with open("data/preparations.json", "r", encoding="utf-8") as f:
-    preparations = json.load(f)
+    with open("data/preparations.json", "r", encoding="utf-8") as f:
+        preparations = json.load(f)
+
+    return recipes, preparations
+
+recipes, preparations = load_data()
 
 def get_user_ingredients(input_str):
     return [item.strip().lower() for item in input_str.split(",") if item.strip()]
@@ -80,6 +86,12 @@ class CookWiseApp(QWidget):
         self.show_recipe_button.clicked.connect(self.show_selected_recipe)
         layout.addWidget(self.show_recipe_button)
 
+        # Yeni Tarif Ekle Butonu
+        add_recipe_button = QPushButton("📝 Add New Recipe", self)
+        add_recipe_button.setStyleSheet("font-size: 14px; padding: 8px;")
+        add_recipe_button.clicked.connect(self.open_add_recipe_window)
+        layout.addWidget(add_recipe_button)
+
         # Footer
         footer = QLabel("© 2025 CookWise AI")
         footer.setStyleSheet("font-size: 10px; color: gray;")
@@ -144,6 +156,15 @@ class CookWiseApp(QWidget):
             self.show_recipe(selected_dish)
         else:
             QMessageBox.warning(self, "Yemek Seçin", "Lütfen bir yemek seçin.")
+
+    def open_add_recipe_window(self):
+        self.recipe_adder = RecipeAdder(on_recipe_added=self.update_recipes)  # Yeni eklenen yemek ekleme sonrası güncelleme işlemi
+        self.recipe_adder.show()
+
+    def update_recipes(self):
+        global recipes, preparations  # Global verileri güncelliyoruz
+        recipes, preparations = load_data()  # Verileri tekrar yükleyip güncelliyoruz
+        QMessageBox.information(self, "Başarı", "Yeni yemek başarıyla eklendi ve veri güncellendi!")
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

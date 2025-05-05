@@ -98,5 +98,16 @@
             "1 kavanoz garnitür"
         ],
         "servings": 4
+    },
+    "Kırmızı Mercimek Çorbası": {
+        "ingredients": [
+            "1 su bardağı kırmızı mercimek",
+            "2 litre su",
+            "1 çorba kaşığı sıvı yağ",
+            "1 adet havuç",
+            "1 baş soğan",
+            "1 çorba kaşığı salça",
+            "2 adet tavuk bulyon"
+        ]
     }
 }
