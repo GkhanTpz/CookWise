@@ -109,5 +109,33 @@
             "1 çorba kaşığı salça",
             "2 adet tavuk bulyon"
         ]
+    },
+    "Şehriye Çorbası": {
+        "ingredients": [
+            "2 litre sıcak su",
+            "1 yemek kaşık sıvı yağ",
+            "1/2 adet soğan",
+            "1 adet havuç",
+            "1/2 su bardağı tel şehriye",
+            "2 adet tavuk bulyon"
+        ]
+    },
+    "Kremalı Tavuk": {
+        "ingredients": [
+            "500 gr tavuk göğsü",
+            "300 gr mantar",
+            "1 adet soğan",
+            "2 yemek kaşığı un",
+            "1 adet tavuk bulyon",
+            "75ml sıvı krema",
+            "1",
+            "5 yemek kaşığı sıvı yağ",
+            "1",
+            "5 yemek kaşığı domates salçası",
+            "1",
+            "5 su bardağı sıcak su",
+            "kara biber",
+            "tuz"
+        ]
     }
 }

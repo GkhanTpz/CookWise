@@ -1,31 +1,45 @@
 import json
 import random
 
-# Bu dosya, yemek tariflerini yükleyip, kullanıcı tarafından girilen malzemelere göre yemek eşleşmelerini hesaplar.
-# Ayrıca, yemek tariflerinin adım adım formatlanmasını sağlar.
+# JSON dosyalarından tarifleri ve hazırlıkları yükler
 def load_data():
     with open("data/recipes.json", "r", encoding="utf-8") as f:
-        recipes = json.load(f)  # Yemek tariflerini ve malzemeleri içeren json dosyasını okur.
+        recipes = json.load(f)
 
     with open("data/preparations.json", "r", encoding="utf-8") as f:
-        preparations = json.load(f)  # Yemeklerin yapılış tariflerini içeren json dosyasını okur.
+        preparations = json.load(f)
 
-    return recipes, preparations  # Yüklenen tarif ve hazırlık bilgilerini döndürür.
+    return recipes, preparations
 
+# Kullanıcının girdiği malzemeleri temizleyip filtreler
 def get_user_ingredients(input_str):
-    return [item.strip().lower() for item in input_str.split(",") if item.strip()]  # Kullanıcının girdiği malzemeleri temizler ve küçük harfe dönüştürür.
+    ignored_ingredients = {"su", "tuz"}
+    return [item.strip().lower() for item in input_str.split(",") if item.strip() and item.strip().lower() not in ignored_ingredients]
 
+# Tarifleri eşleşme skorlarına göre sıralar
 def score_recipe_match(user_ingredients, recipes):
-    scored = []  # Eşleşme skoru listesi oluşturur.
+    scored = []
     for dish, data in recipes.items():
-        ingredients_lower = [i.lower() for i in data["ingredients"]]  # Yemeğin malzemelerini küçük harfe çevirir.
-        matched = [u for u in user_ingredients if any(u in ing for ing in ingredients_lower)]  # Kullanıcının girdiği malzemelerle eşleşenleri bulur.
-        score = len(matched)  # Eşleşen malzemelerin sayısını skor olarak kullanır.
-        missing = [ing for ing in ingredients_lower if not any(u in ing for u in user_ingredients)]  # Eksik malzemeleri bulur.
-        scored.append((dish, score, missing, matched, ingredients_lower))  # Skor, eksik malzemeler ve eşleşen malzemelerle birlikte yemeği kaydeder.
-    scored.sort(key=lambda x: x[1], reverse=True)  # Yemekleri skorlarına göre azalan sırayla sıralar.
-    return scored  # Sıralı eşleşme sonuçlarını döndürür.
+        ingredients_lower = [i.lower() for i in data["ingredients"]]
+        matched = [u for u in user_ingredients if any(u in ing for ing in ingredients_lower)]
+        score = len(matched)
+        missing = [ing for ing in ingredients_lower if not any(u in ing for u in user_ingredients)]
+        scored.append((dish, score, missing, matched, ingredients_lower))
+    scored.sort(key=lambda x: x[1], reverse=True)
+    return scored
 
+# Filtreleme kuralı: az malzeme → tam eşleşme, çok malzeme → minimum 3 eşleşme
+def filter_matches(user_ingredients, matches):
+    filtered = []
+    for dish, score, missing, matched, total in matches:
+        if len(user_ingredients) >= 3 and score < 3:
+            continue
+        if len(user_ingredients) in [1, 2] and score != len(user_ingredients):
+            continue
+        filtered.append((dish, score, missing, matched, total))
+    return filtered
+
+# Tarifleri numaralı şekilde biçimlendirir
 def format_recipe(preparation):
-    steps = preparation.split("\n")  # Tarifi satırlara böler.
-    return "\n".join([f"{idx+1}. {step.strip()}" for idx, step in enumerate(steps)])  # Her bir adımı numaralandırarak birleştirir.
+    steps = preparation.split("\n")
+    return "\n".join([f"{idx+1}. {step.strip()}" for idx, step in enumerate(steps)])
